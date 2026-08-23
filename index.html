@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Japonya Seyahat Asistanı">
+  <title>🇯🇵 Japonya Seyahat Asistanı</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: #f7f7f7;
+      color: #222;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      max-width: 760px;
+      margin: auto;
+      min-height: 100vh;
+      background: white;
+    }
+
+    header {
+      padding: 22px 18px 16px;
+      text-align: center;
+      background: linear-gradient(180deg, #fff 0%, #fff8f8 100%);
+      border-bottom: 1px solid #eee;
+    }
+
+    .flag {
+      font-size: 42px;
+      margin-bottom: 4px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .location-box {
+      margin: 16px;
+      padding: 15px;
+      border-radius: 18px;
+      background: #fafafa;
+      border: 1px solid #eee;
+    }
+
+    .location-title {
+      font-weight: 800;
+      margin-bottom: 9px;
+    }
+
+    .location-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .location-buttons button {
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 12px;
+      padding: 9px 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .location-buttons button.active {
+      background: #222;
+      color: white;
+      border-color: #222;
+    }
+
+    .search {
+      margin: 0 16px 18px;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 15px 17px;
+      border-radius: 16px;
+      border: 1px solid #ddd;
+      outline: none;
+      background: #fafafa;
+    }
+
+    .search input:focus {
+      border-color: #999;
+      background: white;
+    }
+
+    .section-title {
+      padding: 0 16px 10px;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 0 16px 22px;
+    }
+
+    .category {
+      border: 1px solid #eee;
+      border-radius: 20px;
+      background: white;
+      padding: 18px 14px;
+      min-height: 125px;
+      text-align: left;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+      cursor: pointer;
+      transition: transform .15s;
+    }
+
+    .category:active {
+      transform: scale(.97);
+    }
+
+    .category-icon {
+      font-size: 35px;
+      margin-bottom: 8px;
+    }
+
+    .category-name {
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .category-desc {
+      color: #777;
+      font-size: 12px;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .cards {
+      padding: 0 16px 30px;
+    }
+
+    .card {
+      border: 1px solid #e8e8e8;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 14px;
+      background: white;
+    }
+
+    .card-visual {
+      width: 100%;
+      min-height: 120px;
+      border-radius: 16px;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 65px;
+      margin-bottom: 15px;
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .language {
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 13px;
+      background: #fafafa;
+    }
+
+    .language-label {
+      font-size: 11px;
+      color: #777;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .language-text {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .japanese {
+      font-size: 24px;
+      line-height: 1.5;
+    }
+
+    .reading {
+      color: #555;
+      font-size: 16px;
+      font-style: italic;
+    }
+
+    .info {
+      color: #555;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .show-button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      background: #222;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .back-button {
+      margin: 16px;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: #777;
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: #999;
+      font-size: 12px;
+      border-top: 1px solid #eee;
+    }
+
+    @media (min-width: 600px) {
+      .categories {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <div class="flag">🇯🇵</div>
+    <h1>Japonya Seyahat Asistanı</h1>
+    <div class="subtitle">
+      Japonya'da ihtiyacın olduğunda yanında
+    </div>
+  </header>
+
+  <section class="location-box">
+    <div class="location-title">📍 Şu anda neredesin?</div>
+
+    <div class="location-buttons">
+      <button onclick="setLocation('Tokyo', this)">Tokyo</button>
+      <button onclick="setLocation('Kyoto', this)">Kyoto</button>
+      <button onclick="setLocation('Osaka', this)">Osaka</button>
+      <button onclick="setLocation('Diğer', this)">Diğer</button>
+    </div>
+  </section>
+
+  <div class="search">
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="🔎 Ne arıyorsun? Örn: domuz, tren, otel..."
+      oninput="searchCards()"
+    >
+  </div>
+
+  <main id="mainContent">
+
+    <div class="section-title">Seyahat Asistanı</div>
+
+    <div class="categories">
+
+      <button class="category" onclick="openCategory('airport')">
+        <div class="category-icon">✈️</div>
+        <div class="category-name">Havalimanı</div>
+        <div class="category-desc">Check-in, bagaj, güvenlik, gate ve varış</div>
+      </button>
+
+      <button class="category" onclick="openCategory('flight')">
+        <div class="category-icon">🛫</div>
+        <div class="category-name">Uçak</div>
+        <div class="category-desc">Uçakta kullanabileceğin ifadeler</div>
+      </button>
+
+      <button class="category" onclick="openCategory('transport')">
+        <div class="category-icon">🚆</div>
+        <div class="category-name">Ulaşım</div>
+        <div class="category-desc">Tren, metro, otobüs ve taksi</div>
+      </button>
+
+      <button class="category" onclick="openCategory('places')">
+        <div class="category-icon">🏯</div>
+        <div class="category-name">Gezi & Tarih</div>
+        <div class="category-desc">Ünlü yerler, tarih ve görülecekler</div>
+      </button>
+
+      <button class="category" onclick="openCategory('food')">
+        <div class="category-icon">🍜</div>
+        <div class="category-name">Yemek</div>
+        <div class="category-desc">Japon yemekleri ve restoran ifadeleri</div>
+      </button>
+
+      <button class="category" onclick="openCategory('halal')">
+        <div class="category-icon">☪️</div>
+        <div class="category-name">Helal & İçerik</div>
+        <div class="category-desc">Domuz, alkol ve içerik kontrolü</div>
+      </button>
+
+      <button class="category" onclick="openCategory('hotel')">
+        <div class="category-icon">🏨</div>
+        <div class="category-name">Otel</div>
+        <div class="category-desc">Check-in, oda ve otel iletişimi</div>
+      </button>
+
+      <button class="category" onclick="openCategory('shopping')">
+        <div class="category-icon">🛍️</div>
+        <div class="category-name">Alışveriş</div>
+        <div class="category-desc">Mağaza ve ödeme ifadeleri</div>
+      </button>
+
+      <button class="category" onclick="openCategory('money')">
+        <div class="category-icon">💴</div>
+        <div class="category-name">Para & Ödeme</div>
+        <div class="category-desc">Yen, kart, ATM ve ödeme</div>
+      </button>
+
+      <button class="category" onclick="openCategory('phone')">
+        <div class="category-icon">📱</div>
+        <div class="category-name">Telefon & İnternet</div>
+        <div class="category-desc">SIM, eSIM, Wi-Fi ve şarj</div>
+      </button>
+
+      <button class="category" onclick="openCategory('emergency')">
+        <div class="category-icon">🚨</div>
+        <div class="category-name">Acil Durum</div>
+        <div class="category-desc">Yardım ve önemli ifadeler</div>
+      </button>
+
+      <button class="category" onclick="openCategory('communication')">
+        <div class="category-icon">💬</div>
+        <div class="category-name">İletişim</div>
+        <div class="category-desc">Japonlarla günlük iletişim</div>
+      </button>
+
+    </div>
+
+  </main>
+
+  <footer>
+    🇯🇵 Japonya Seyahat Asistanı<br>
+    Türkçe • English • 日本語 • Latin okunuş
+  </footer>
+
+</div>
+
+<script>
+
+let currentLocation = "";
+
+const cards = {
+
+  halal: [
+    {
+      icon: "🐖",
+      title: "Domuz eti var mı?",
+      tr: "Bu yemeğin içinde domuz eti var mı?",
+      en: "Does this contain pork?",
+      jp: "豚肉は入っていますか？",
+      reading: "Buta-niku wa haitte imasu ka?"
+    },
+    {
+      icon: "🍺",
+      title: "Alkol var mı?",
+      tr: "Bu yemeğin içinde alkol var mı?",
+      en: "Does this contain alcohol?",
+      jp: "アルコールは入っていますか？",
+      reading: "Arukōru wa haitte imasu ka?"
+    },
+    {
+      icon: "🥩",
+      title: "Dana eti",
+      tr: "Dana eti kullanıyor musunuz?",
+      en: "Do you use beef?",
+      jp: "牛肉を使っていますか？",
+      reading: "Gyūniku o tsukatte imasu ka?"
+    }
+  ],
+
+  communication: [
+    {
+      icon: "🙏",
+      title: "Teşekkür ederim",
+      tr: "Teşekkür ederim.",
+      en: "Thank you.",
+      jp: "ありがとうございます。",
+      reading: "Arigatō gozaimasu"
+    },
+    {
+      icon: "🙇",
+      title: "Özür dilerim",
+      tr: "Özür dilerim / Affedersiniz.",
+      en: "Excuse me / I'm sorry.",
+      jp: "すみません。",
+      reading: "Sumimasen"
+    },
+    {
+      icon: "🆘",
+      title: "İngilizce biliyor musunuz?",
+      tr: "İngilizce biliyor musunuz?",
+      en: "Do you speak English?",
+      jp: "英語を話せますか？",
+      reading: "Eigo o hanasemasu ka?"
+    }
+  ],
+
+  transport: [
+    {
+      icon: "🚉",
+      title: "İstasyon",
+      tr: "İstasyon",
+      en: "Station",
+      jp: "駅",
+      reading: "Eki"
+    },
+    {
+      icon: "🚆",
+      title: "Tren",
+      tr: "Tren",
+      en: "Train",
+      jp: "電車",
+      reading: "Densha"
+    },
+    {
+      icon: "🚕",
+      title: "Taksi",
+      tr: "Taksi",
+      en: "Taxi",
+      jp: "タクシー",
+      reading: "Takushī"
+    }
+  ],
+
+  food: [
+    {
+      icon: "🍣",
+      title: "Sushi",
+      tr: "Sushi",
+      en: "Sushi",
+      jp: "寿司",
+      reading: "Sushi",
+      info: "Japon mutfağının en bilinen yemeklerinden biridir. İçeriği restorana göre değişebilir."
+    },
+    {
+      icon: "🍜",
+      title: "Ramen",
+      tr: "Ramen",
+      en: "Ramen",
+      jp: "ラーメン",
+      reading: "Rāmen",
+      info: "Çorba, erişte ve çeşitli malzemelerden oluşur. Et suyu ve içerikleri özellikle kontrol edilmelidir."
+    },
+    {
+      icon: "🥟",
+      title: "Gyoza",
+      tr: "Gyoza",
+      en: "Gyoza",
+      jp: "餃子",
+      reading: "Gyōza",
+      info: "Japonya'da çok sevilen hamur işidir. İçeriğinde kullanılan et mutlaka sorulmalıdır."
+    }
+  ],
+
+  hotel: [
+    {
+      icon: "🏨",
+      title: "Check-in yapmak istiyorum",
+      tr: "Check-in yapmak istiyorum.",
+      en: "I would like to check in.",
+      jp: "チェックインをお願いします。",
+      reading: "Chekku-in o onegaishimasu"
+    },
+    {
+      icon: "🧳",
+      title: "Bagajımı bırakabilir miyim?",
+      tr: "Bagajımı burada bırakabilir miyim?",
+      en: "Can I leave my luggage here?",
+      jp: "荷物をここに置いてもいいですか？",
+      reading: "Nimotsu o koko ni oite mo ii desu ka?"
+    }
+  ],
+
+  airport: [
+    {
+      icon: "🛂",
+      title: "Pasaport kontrolü",
+      tr: "Pasaport kontrolü",
+      en: "Passport control",
+      jp: "入国審査",
+      reading: "Nyūkoku shinsa"
+    },
+    {
+      icon: "🧳",
+      title: "Bagaj teslim",
+      tr: "Bagaj teslim alanı",
+      en: "Baggage claim",
+      jp: "手荷物受取所",
+      reading: "Temotsu uketori-jo"
+    },
+    {
+      icon: "🚪",
+      title: "Gate",
+      tr: "Uçağın kalkacağı kapı",
+      en: "Gate",
+      jp: "搭乗口",
+      reading: "Tōjōguchi"
+    }
+  ],
+
+  flight: [
+    {
+      icon: "💺",
+      title: "Koltuk",
+      tr: "Koltuk",
+      en: "Seat",
+      jp: "座席",
+      reading: "Zaseki"
+    },
+    {
+      icon: "🚻",
+      title: "Tuvalet nerede?",
+      tr: "Tuvalet nerede?",
+      en: "Where is the restroom?",
+      jp: "トイレはどこですか？",
+      reading: "Toire wa doko desu ka?"
+    }
+  ],
+
+  shopping: [
+    {
+      icon: "💴",
+      title: "Bu ne kadar?",
+      tr: "Bu ne kadar?",
+      en: "How much is this?",
+      jp: "これはいくらですか？",
+      reading: "Kore wa ikura desu ka?"
+    },
+    {
+      icon: "🛒",
+      title: "Bunu alıyorum",
+      tr: "Bunu alıyorum.",
+      en: "I'll take this.",
+      jp: "これをください。",
+      reading: "Kore o kudasai"
+    }
+  ],
+
+  money: [
+    {
+      icon: "💴",
+      title: "Yen",
+      tr: "Japon Yeni",
+      en: "Japanese Yen",
+      jp: "日本円",
+      reading: "Nihon-en"
+    },
+    {
+      icon: "🏧",
+      title: "ATM",
+      tr: "ATM nerede?",
+      en: "Where is the ATM?",
+      jp: "ATMはどこですか？",
+      reading: "ATM wa doko desu ka?"
+    }
+  ],
+
+  phone: [
+    {
+      icon: "📶",
+      title: "Wi-Fi",
+      tr: "Wi-Fi şifresi nedir?",
+      en: "What is the Wi-Fi password?",
+      jp: "Wi-Fiのパスワードは何ですか？",
+      reading: "Wi-Fi no pasuwādo wa nan desu ka?"
+    },
+    {
+      icon: "🔌",
+      title: "Şarj",
+      tr: "Telefonumu şarj edebilir miyim?",
+      en: "Can I charge my phone?",
+      jp: "携帯電話を充電してもいいですか？",
+      reading: "Keitai denwa o jūden shite mo ii desu ka?"
+    }
+  ],
+
+  emergency: [
+    {
+      icon: "🆘",
+      title: "Yardıma ihtiyacımız var",
+      tr: "Yardıma ihtiyacımız var.",
+      en: "We need help.",
+      jp: "助けが必要です。",
+      reading: "Tasuke ga hitsuyō desu"
+    },
+    {
+      icon: "🏥",
+      title: "Hastane",
+      tr: "Hastaneye gitmemiz gerekiyor.",
+      en: "We need to go to a hospital.",
+      jp: "病院に行く必要があります。",
+      reading: "Byōin ni iku hitsuyō ga arimasu"
+    }
+  ],
+
+  places: [
+    {
+      icon: "🏯",
+      title: "Fushimi Inari",
+      tr: "Fushimi Inari Taisha",
+      en: "Fushimi Inari Taisha",
+      jp: "伏見稲荷大社",
+      reading: "Fushimi Inari Taisha",
+      info: "Kyoto'nun en tanınmış tapınaklarından biridir ve binlerce kırmızı torii kapısıyla ünlüdür."
+    },
+    {
+      icon: "⛩️",
+      title: "Tapınak",
+      tr: "Tapınak",
+      en: "Shrine",
+      jp: "神社",
+      reading: "Jinja",
+      info: "Japonya'da Şinto tapınaklarına verilen genel isimdir."
+    }
+  ]
+};
+
+function setLocation(location, button) {
+  currentLocation = location;
+
+  document
+    .querySelectorAll(".location-buttons button")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  alert("Konum seçildi: " + location);
+}
+
+function openCategory(category) {
+  const data = cards[category] || [];
+
+  let html = `
+    <button class="back-button" onclick="goHome()">← Ana sayfa</button>
+    <div class="section-title">Kartlar</div>
+    <div class="cards">
+  `;
+
+  data.forEach(card => {
+    html += createCard(card);
+  });
+
+  html += `</div>`;
+
+  document.getElementById("mainContent").innerHTML = html;
+}
+
+function createCard(card) {
+  return `
+    <article class="card">
+
+      <div class="card-visual">${card.icon}</div>
+
+      <h2>${card.title}</h2>
+
+      <div class="language">
+        <div class="language-label">Türkçe</div>
+        <div class="language-text">${card.tr}</div>
+      </div>
+
+      <div class="language">
+        <div class="language-label">English</div>
+        <div class="language-text">${card.en}</div>
+      </div>
+
+      <div class="language">
+        <div class="language-label">日本語</div>
+        <div class="language-text japanese">${card.jp}</div>
+      </div>
+
+      <div class="language">
+        <div class="language-label">Japonca okunuş</div>
+        <div class="language-text reading">${card.reading}</div>
+      </div>
+
+      ${card.info ? `<div class="info">💡 ${card.info}</div>` : ""}
+
+      <button class="show-button" onclick="showCard(this)">
+        📱 Karşı tarafa göster
+      </button>
+
+    </article>
+  `;
+}
+
+function showCard(button) {
+  const card = button.closest(".card");
+  card.requestFullscreen?.();
+}
+
+function goHome() {
+  location.reload();
+}
+
+function searchCards() {
+  const query = document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  if (!query) {
+    location.reload();
+    return;
+  }
+
+  let results = [];
+
+  Object.values(cards).forEach(category => {
+    category.forEach(card => {
+      const searchable = (
+        card.title + " " +
+        card.tr + " " +
+        card.en + " " +
+        card.jp + " " +
+        card.reading + " " +
+        (card.info || "")
+      ).toLowerCase();
+
+      if (searchable.includes(query)) {
+        results.push(card);
+      }
+    });
+  });
+
+  let html = `
+    <button class="back-button" onclick="goHome()">← Ana sayfa</button>
+    <div class="section-title">Arama sonuçları</div>
+    <div class="cards">
+  `;
+
+  if (results.length === 0) {
+    html += `<div class="empty">😕 Aradığın şey henüz bulunamadı.</div>`;
+  } else {
+    results.forEach(card => {
+      html += createCard(card);
+    });
+  }
+
+  html += `</div>`;
+
+  document.getElementById("mainContent").innerHTML = html;
+}
+
+</script>
+
+</body>
+</html>
