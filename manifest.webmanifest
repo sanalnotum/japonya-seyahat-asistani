@@ -1,0 +1,13 @@
+{
+  "name": "Japonya Seyahat Asistanı",
+  "short_name": "Japonya Asistanı",
+  "description": "Japonya seyahatlerinde iletişim, ulaşım, yemek, gezi ve günlük ihtiyaçlar için seyahat asistanı.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "lang": "tr",
+  "icons": []
+}
